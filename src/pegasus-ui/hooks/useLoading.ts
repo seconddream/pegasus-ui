@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { wait } from '../utils/helpers'
+import { wait } from '../shared/helpers'
 
 export interface UseLoadingProps {
   loader: (args?: any)=>any

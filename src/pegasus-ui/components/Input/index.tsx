@@ -1,12 +1,16 @@
 import { useState } from 'react'
-import { WithFormControl, WithItemSize } from '../../shared/interfaces'
-import classNames from 'classnames'
-import { BorderTheme, ColorTheme, FocusStyle, FormItemDefaultWidth, ItemSizing } from '../../shared/styles'
+import { WithFormControl, WithId, WithSizing } from '../../shared/interfaces'
+import { FormItemDefaultWidth, Sizing } from '../../shared/styles'
 import Label from '../Label'
-import { AiOutlineCloseCircle, AiOutlineCopy, AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
+import {
+  AiOutlineCloseCircle,
+  AiOutlineCopy,
+  AiOutlineEye,
+  AiOutlineEyeInvisible,
+} from 'react-icons/ai'
+import clsx from 'clsx'
 
-export interface InputProps extends WithItemSize, WithFormControl {
-  id?: string
+export interface InputProps extends WithId, WithSizing, WithFormControl {
   type?: 'number' | 'password' | 'text' | 'textarea'
   width?: string
   prefix?: string
@@ -65,28 +69,40 @@ export default function Input(props: InputProps) {
     }
   }
 
+  const { fontSize, gap, height, paddingX, paddingY, corner } = Sizing[size]
+
   return (
     <div
       id={id}
-      className={classNames(
-        'flex border justify-start items-center',
-        { 'bg-white': !disabled, [ColorTheme.disabled.bg]: disabled },
+      className={clsx(
+        'flex border justify-start items-center shadow-sm',
+        { 'bg-white': !disabled, ['bg-disabled']: disabled },
         width,
-        ItemSizing.FontSize[size],
-        ItemSizing.Gap[size],
-        { [ItemSizing.Height[size]]: type !== 'textarea', [ItemSizing.PaddingY[size]]: type === 'textarea' },
-        ItemSizing.RoundCorner[size],
-        { [BorderTheme.Item]: !error, ['border-rose-500']: error },
-        ItemSizing.PaddingX[size],
-        { [`${FocusStyle.Item} ring-2`]: focus }
+        fontSize,
+        gap,
+        { [height]: type !== 'textarea', [paddingY]: type === 'textarea' },
+        corner,
+        error ? 'border-error-600' : 'border-dark-line',
+        paddingX,
+        { [`ring-highlight ring-2`]: focus }
       )}
+      
     >
-      {prefix && <span className={classNames({ 'text-slate-400': !error, ['text-rose-500']: error })}>{prefix}</span>}
+      {prefix && (
+        <span
+          className={clsx({
+            ' text-deemphasized-content': !error,
+            ['text-error-600']: error,
+          })}
+        >
+          {prefix}
+        </span>
+      )}
       {type !== 'textarea' && (
         <input
           disabled={disabled}
-          className={classNames('border-none outline-none w-full', {
-            [`${ColorTheme.disabled.bg} ${ColorTheme.disabled.text}`]: disabled,
+          className={clsx('border-none outline-none w-full', {
+            [`bg-disabled  text-deemphasized-content`]: disabled,
           })}
           type={type === 'password' ? (showPassword ? 'text' : type) : type}
           value={isControlled ? initValue : _value}
@@ -112,8 +128,8 @@ export default function Input(props: InputProps) {
       {type === 'textarea' && (
         <textarea
           disabled={disabled}
-          className={classNames('border-none outline-none w-full', {
-            [`${ColorTheme.disabled.bg} ${ColorTheme.disabled.text}`]: disabled,
+          className={clsx('border-none outline-none w-full', {
+            [`bg-disabled  text-deemphasized-content`]: disabled,
           })}
           value={isControlled ? initValue : _value}
           maxLength={maxLength}
@@ -136,20 +152,20 @@ export default function Input(props: InputProps) {
           }}
         />
       )}
-      {suffix && <Label color={error ? 'rose' : 'gray'} text={suffix} />}
-      {(type === 'text' || type === 'textarea')  && (showClear || showCopy) && (
+      {suffix && <Label color={error ? 'red' : 'gray'} text={suffix} />}
+      {(type === 'text' || type === 'textarea') && (showClear || showCopy) && (
         <span
-          className={classNames(
+          className={clsx(
             'flex items-center',
-            {'flex-col': type === 'textarea'},
-            { 'text-slate-400': !error, ['text-rose-500']: error },
-            ItemSizing.Gap[size],
-            ItemSizing.FontSize
+            { 'flex-col': type === 'textarea' },
+            { 'text-deemphasized-content': !error, [' text-error-600']: error },
+            gap,
+            fontSize
           )}
         >
           {showCopy && (
             <AiOutlineCopy
-              className='hover:text-slate-500 hover:cursor-pointer'
+              className='hover:text-content hover:cursor-pointer'
               onClick={() => {
                 navigator.clipboard.writeText(isControlled ? value : _value)
               }}
@@ -157,7 +173,7 @@ export default function Input(props: InputProps) {
           )}
           {showClear && !disabled && (
             <AiOutlineCloseCircle
-              className='hover:text-slate-500 hover:cursor-pointer'
+              className='hover:text-content hover:cursor-pointer'
               onClick={() => {
                 handleValueUpdate('')
               }}
@@ -167,16 +183,16 @@ export default function Input(props: InputProps) {
       )}
       {type === 'password' && allowShowPassword && (
         <span
-          className={classNames(
+          className={clsx(
             'flex items-center',
-            { 'text-slate-400': !error, ['text-rose-500']: error },
-            ItemSizing.Gap[size],
-            ItemSizing.FontSize
+            { 'text-deemphasized-content': !error, [' text-error-600']: error },
+            gap,
+            fontSize
           )}
         >
           {showPassword && (
             <AiOutlineEyeInvisible
-              className='hover:text-slate-500 hover:cursor-pointer'
+              className='hover:text-content hover:cursor-pointer'
               onClick={() => {
                 setShowPassword(false)
               }}
@@ -184,7 +200,7 @@ export default function Input(props: InputProps) {
           )}
           {!showPassword && (
             <AiOutlineEye
-              className='hover:text-slate-500 hover:cursor-pointer'
+              className='hover:text-content hover:cursor-pointer'
               onClick={() => {
                 setShowPassword(true)
                 setTimeout(() => {

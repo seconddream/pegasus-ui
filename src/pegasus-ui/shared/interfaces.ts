@@ -16,7 +16,7 @@ export function parseSizing(size: Sizing) {
 
 export type Spacing = 'relaxed' | 'normal' | 'tight'
 export interface WithSpacing {
-  space: Spacing
+  space?: Spacing
 }
 export function parseSpacing(space: Spacing){
   return {
@@ -30,9 +30,43 @@ export type Direction = 'horizontal' | 'vertical'
 export interface WithDirection {
   direction?: Direction
 }
-export function parseLayoutDirection(direction: Direction) {
+export function parseDirection(direction: Direction) {
   return {
     horizontal: direction === 'horizontal',
-    isVerticverticalal: direction === 'vertical',
+    vertical: direction === 'vertical',
   }
 }
+
+export type Placement = 'top' | 'bottom' | 'left' | 'right' | 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight'
+export interface WithPlacement {
+  position?: Placement
+}
+export function parsePlacement(position: Placement) {
+  const top = position === 'top'
+  const bottom = position === 'bottom'
+  const left = position === 'left'
+  const right = position === 'right'
+  const topLeft = position === 'topLeft'
+  const topRight = position === 'topRight'
+  const bottomLeft = position === 'bottomLeft'
+  const bottomRight = position === 'bottomRight'
+  return {
+    top,
+    bottom,
+    left,
+    right,
+    topLeft,
+    topRight,
+    bottomLeft,
+    bottomRight,
+  }
+}
+
+export interface WithFormControl {
+  value?: any
+  error?: any
+  disabled?: boolean
+  readOnly?: boolean
+  onChange?: (value:any)=>any
+}
+

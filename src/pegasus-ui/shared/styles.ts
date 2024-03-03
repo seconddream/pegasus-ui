@@ -30,17 +30,24 @@ export const Sizing = {
     corner: 'rounded-lg'
   },
   xs: {
-    height: 'h-7',
-    squireSize: 'h-7 w-7',
+    height: 'h-6',
+    squireSize: 'h-6 w-6',
     paddingX: 'px-2',
     paddingY: 'py-1.5',
     fontSize: 'text-xs',
-    iconSize: 'text-sm',
+    iconSize: 'text-base',
     gap: 'gap-1.5',
-    corner: 'rounded-lg'
+    corner: 'rounded-md'
   },
 }
 
-export const Spacing = {}
+export const Spacing = {
+  gap: {
+    relaxed: 'gap-4',
+    normal: 'gap-3',
+    tight: 'gap-2',
+    extratight: 'gap-1'
+  }
+}
 
-export const FocusRingStyle = 'ring-indigo-200 ring-offset-2'
+export const FormItemDefaultWidth = 'w-48'

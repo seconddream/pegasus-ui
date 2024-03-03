@@ -1,61 +1,56 @@
 import clsx from 'clsx'
 import { ReactNode, useRef } from 'react'
 import { WithId, WithSizing } from '../../shared/interfaces'
-import { FocusRingStyle, Sizing } from '@/pegasus-ui/shared/styles'
+import { Sizing } from '@/pegasus-ui/shared/styles'
 import { AiOutlineCheckCircle, AiOutlineExclamationCircle, AiOutlineLoading3Quarters } from 'react-icons/ai'
 
-export type ButtonType = 'primary' | 'secondary' | 'transparent' | 'slient'
+export type ButtonType = 'primary' | 'secondary' | 'transparent'
 
 const ButtonTheme = {
   primary: {
-    bgColor: 'bg-slate-700',
-    bgColorHover: 'hover:bg-indigo-400',
-    textColor: 'text-white',
-    textColorHover: 'hover:text-white',
+    bg: 'bg-primary-700',
+    bgHover: 'hover:bg-primary-600',
+    bgActive: 'active:bg-primary-800',
+    text: 'text-white',
   },
   secondary: {
-    bgColor: 'bg-slate-200',
-    bgColorHover: 'hover:bg-indigo-400',
-    textColor: 'text-slate-700',
-    textColorHover: 'hover:text-white',
+    bg: 'bg-white',
+    bgHover: 'hover:bg-primary-100',
+    bgActive: 'active:bg-primary-200',
+    text: 'text-primary-700',
+    border: `border border-dark-line`,
   },
   transparent: {
-    bgColor: 'bg-transparent',
-    bgColorHover: 'hover:bg-indigo-400',
-    textColor: 'text-slate-700',
-    textColorHover: 'hover:text-white',
-  },
-  slient: {
-    textColor: 'text-slate-700',
-    textColorHover: 'hover:text-indigo-400',
-    textColorActive: 'active:text-slate-700',
-  },
-  loading: {
-    bgColor: 'bg-slate-300',
-    textColor: 'text-white',
+    bg: 'bg-transparent',
+    bgHover: 'hover:bg-primary-300/50',
+    bgActive: 'active:bg-primary-300',
+    text: 'text-primary-700',
   },
   disabled: {
-    bgColor: 'bg-slate-300',
-    textColor: 'text-white',
+    bg: 'bg-disabled',
+    text: 'text-white',
   },
   success: {
-    bgColor: 'bg-green-500',
-    textColor: 'text-white',
+    bg: 'bg-success-500',
+    text: 'text-white',
   },
   error: {
-    bgColor: 'bg-amber-500',
-    bgColorHover: 'hover:bg-amber-400',
-    textColor: 'text-white',
+    bg: 'bg-warning-500',
+    bgHover: 'hover:bg-warning-400',
+    bgActive: 'active:bg-warning-500',
+    text: 'text-white',
   },
   danger: {
-    bgColor: 'bg-red-500',
-    bgColorHover: 'hover:bg-red-400',
-    textColor: 'text-white',
+    bg: 'bg-danger-500',
+    bgHover: 'hover:bg-danger-400',
+    bgActive: 'active:bg-danger-600',
+    text: 'text-white',
   },
 }
 
-export interface ButtonBaseProps extends WithId, WithSizing {
+export interface ButtonBaseProps extends WithId {
   type?: ButtonType
+  size?: 'lg' | 'md' | 'sm' | 'xs'
   shape?: 'rounded' | 'circle'
   block?: boolean
   loading?: boolean
@@ -105,29 +100,26 @@ export default function ButtonBase(props: ButtonBaseProps) {
       tabIndex={focusable && shouldInteract ? 0 : undefined}
       className={clsx(
         // basic
-        'flex flex-shrink-0 whitespace-nowrap justify-center items-center transition-all ease-out',
+        'flex flex-shrink-0 font-medium whitespace-nowrap justify-center items-center transition-all ease-out',
         // sizing
-        circle ? squireSize : [height, paddingX],
-        block ? 'w-full' : 'w-fit',
-        corner,
+        circle || !children ? squireSize : [height, paddingX],
+        block && !circle && !children && 'w-full',
+        circle ? 'rounded-full' : corner,
         fontSize,
         gap,
         // color
         normalState && danger && [...Object.values(ButtonTheme.danger)],
         normalState && !danger && [...Object.values(ButtonTheme[type])],
-        !normalState && loading && [...Object.values(ButtonTheme.loading)],
+        !normalState && loading && [...Object.values(ButtonTheme.disabled)],
         !normalState && success && [...Object.values(ButtonTheme.success)],
         !normalState && error && [...Object.values(ButtonTheme.error)],
         !normalState && disabled && [...Object.values(ButtonTheme.disabled)],
+        // shadow
+        type !== 'transparent' && 'shadow-sm',
         // interaction
         shouldInteract
-          ? [
-              'hover:cursor-pointer',
-              type !== 'slient' && 'hover:-translate-y-0.5 active:translate-y-0 hover:shadow-lg active:shadow-none',
-              'focus:border-none focus:outline-none focus:ring-2',
-              FocusRingStyle,
-            ]
-          : ['hover:cursor-not-allowed']
+          ? 'hover:cursor-pointer focus:outline-none focus:ring-2 focus:ring-highlight'
+          : 'hover:cursor-not-allowed'
       )}
       onMouseDown={(e) => {
         e.preventDefault()
@@ -136,10 +128,18 @@ export default function ButtonBase(props: ButtonBaseProps) {
       onClick={(e) => {
         e.preventDefault()
         e.stopPropagation()
+        if (!shouldInteract) {
+          return
+        }
+        buttonRef.current?.classList.add('animate-signal')
+        buttonRef.current?.addEventListener('animationend', () => {
+          buttonRef.current?.classList.remove('animate-signal')
+        })
+        buttonRef.current?.blur()
         onClick?.()
       }}
       onKeyDown={(e) => {
-        if (focusable && e.key === 'Enter') {
+        if (focusable && e.key === 'Enter' && shouldInteract) {
           buttonRef.current?.blur()
           onClick?.()
         }

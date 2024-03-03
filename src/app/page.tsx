@@ -1,31 +1,41 @@
 'use client'
 
-import ButtonBase from '@/pegasus-ui/components/Button/ButtonBase'
-import { AiOutlineHome } from 'react-icons/ai'
+import {Divider, Button, Section} from '@/pegasus-ui'
+import Input from '@/pegasus-ui/components/Input'
+
+import {
+  AiOutlineBlock,
+  AiOutlineDelete,
+  AiOutlineExclamationCircle,
+  AiOutlineFileAdd,
+  AiOutlineHome,
+  AiOutlineReload,
+  AiOutlineSave,
+  AiOutlineStop,
+} from 'react-icons/ai'
 
 export default function Home() {
   return (
-    <div className='flex flex-col gap-3 m-5'>
-      <div className='flex m-3 gap-3'>
-        <ButtonBase type='primary'>Click Me</ButtonBase>
-        <ButtonBase type='secondary'>Click Me</ButtonBase>
-        <ButtonBase type='transparent'>Click Me</ButtonBase>
-        <ButtonBase type='slient'>Click Me</ButtonBase>
-      </div>
-      <div className='flex m-3 gap-3'>
-        <ButtonBase focusable size='lg' icon={<AiOutlineHome />} iconPosition='right'>Click Me</ButtonBase>
-        <ButtonBase size='md' icon={<AiOutlineHome />}>Click Me</ButtonBase>
-        <ButtonBase size='sm' icon={<AiOutlineHome />}>Click Me</ButtonBase>
-
-      </div>
-      <div className='flex m-3 gap-3'>
-        <ButtonBase error>Click Me</ButtonBase>
-        <ButtonBase success>Click Me</ButtonBase>
-        <ButtonBase loading>Click Me</ButtonBase>
-        <ButtonBase disabled>Click Me</ButtonBase>
-        <ButtonBase danger>Click Me</ButtonBase>
-      </div>
-      
+    <div className='flex flex-col items-end w-screen h-screen px-6 py-5 gap-4'>
+      <Section
+        title='Buttons'
+        // loading
+        // error
+        errorMessage='Failed to load!'
+        collapsible
+        summary='Some information when collapsed'
+        tools={[
+          <Button type='primary' icon={<AiOutlineFileAdd />}>
+            Create
+          </Button>,
+          <Input type='password' placeHolder='haha' allowShowPassword  />,
+          <Button focusable type='secondary' icon={<AiOutlineSave />}>Save</Button>,
+          <Button type='secondary' icon={<AiOutlineDelete />}>Delete</Button>,
+          <Button type='secondary' tooltips='Some information' position='bottom' icon={<AiOutlineReload />}>Refresh</Button>,
+        ]}
+      >
+        <div className='bg-red-300'>{Math.random()}</div>
+      </Section>
     </div>
   )
 }
