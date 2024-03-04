@@ -32,7 +32,7 @@ const config: Config = {
         ['warning-hover']: colors.amber[400],
         ['warning-active']: colors.amber[600],
         ['warning-light']: colors.amber[200],
-        disabled: colors.slate[300],
+        disabled: colors.slate[200],
         danger: colors.rose[500],
         ['danger-hover']: colors.rose[400],
         ['danger-active']: colors.rose[600],

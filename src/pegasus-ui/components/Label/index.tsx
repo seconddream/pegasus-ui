@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import { WithId } from '../../shared/interfaces'
 import { Sizing } from '../../shared/styles'
+import { AiOutlineClose, AiOutlineCloseCircle } from 'react-icons/ai'
 
 export type LabelColor ='dark' | 'white' | 'gray' | 'amber' | 'emerald' | 'teal' | 'sky' | 'indigo' | 'fuchsia' | 'pink' | 'red'
 
@@ -70,13 +71,18 @@ export interface LabelProps extends WithId {
   bordered?: boolean
   shadow?: boolean
   text: string
+  onClose?: (text:string)=>any
 }
 
 export default function Label(props: LabelProps) {
-  const { id, size = 'xs', color = 'white', bordered = false, shadow = false, text } = props
+  const { id, size = 'xs', color = 'white', bordered = false, shadow = false, text, onClose } = props
   const {height, paddingX, fontSize, iconSize, gap, corner,} = Sizing[size]
   return (
     <div
+      onClick={(e)=>{
+        e.preventDefault()
+        e.stopPropagation()
+      }}
       id={id}
       className={clsx(
         'flex whitespace-nowrap hyphens-auto justify-center items-center',
@@ -89,6 +95,9 @@ export default function Label(props: LabelProps) {
       )}
     >
       {text}
+      {onClose && <AiOutlineCloseCircle onClick={()=>{
+        onClose(text)
+      }} /> }
     </div>
   )
 }

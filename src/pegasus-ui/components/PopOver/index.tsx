@@ -30,7 +30,7 @@ export default function PopOver(props: PopUpBaseProps) {
   return (
     <div className={clsx('relative', {})}>
       <div ref={targetRef}
-        className={clsx('absolute z-10', block && 'min-w-full', {
+        className={clsx('absolute hidden z-10', block && 'min-w-full', {
           'bottom-full pb-1.5': top || topLeft || topRight,
           'top-full pt-1.5': bottom || bottomLeft || bottomRight,
           'left-1/2 -translate-x-1/2': top || bottom,

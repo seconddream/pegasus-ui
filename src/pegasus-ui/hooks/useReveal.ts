@@ -35,7 +35,6 @@ export default function useReveal(
       ref.current?.addEventListener(
         'animationend',
         () => {
-          console.log('ended')
           ref.current?.classList.add('hidden')
           ref.current?.classList.remove('animate-fade-out')
         },

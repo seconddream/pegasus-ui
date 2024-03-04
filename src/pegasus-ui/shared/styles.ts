@@ -1,6 +1,7 @@
 export const Sizing = {
   lg: {
     height: 'h-10',
+    minHeight: 'min-h-10',
     squireSize: 'h-10 w-10',
     paddingX: 'px-3.5',
     paddingY: 'py-3',
@@ -11,9 +12,10 @@ export const Sizing = {
   },
   md: {
     height: 'h-9',
+    minHeight: 'min-h-9',
     squireSize: 'h-9 w-9',
     paddingX: 'px-3',
-    paddingY: 'py-2.5',
+    paddingY: 'py-[6px]',
     fontSize: 'text-sm',
     iconSize: 'text-lg',
     gap: 'gap-2',
@@ -21,6 +23,7 @@ export const Sizing = {
   },
   sm: {
     height: 'h-8',
+    minHeight: 'min-h-8',
     squireSize: 'h-8 w-8',
     paddingX: 'px-2.5',
     paddingY: 'py-2',
@@ -31,9 +34,10 @@ export const Sizing = {
   },
   xs: {
     height: 'h-6',
+    minHeight: 'min-h-6',
     squireSize: 'h-6 w-6',
     paddingX: 'px-2',
-    paddingY: 'py-1.5',
+    paddingY: 'py-1',
     fontSize: 'text-xs',
     iconSize: 'text-base',
     gap: 'gap-1.5',

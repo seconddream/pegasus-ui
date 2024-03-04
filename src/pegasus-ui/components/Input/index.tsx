@@ -43,8 +43,8 @@ export default function Input(props: InputProps) {
 
   const isControlled = value !== undefined
   const initValue = isControlled ? (value === null ? '' : value) : ''
-
   const [_value, _setValue] = useState(initValue)
+  
   const [focus, setFocus] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
 
