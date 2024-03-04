@@ -78,13 +78,13 @@ export default function SelectBase(props: SelectBaseProps) {
 
   return (
     <div id={id} className={clsx(width)}>
-      <PopOver el={children} show={open} animation='slide-down' position={position} block>
+      <PopOver el={children} show={open} animation='slide-down' position={position} block >
         <div
           ref={baseRef}
           tabIndex={shouldInteract ? 0 : undefined}
           className={clsx(
             'flex items-center justify-start border shadow-sm',
-            disabled ? 'bg-disabled' : 'bg-white hover:cursor-pointer',
+            disabled ? 'bg-disabled text-deemphasized-content' : 'bg-white hover:cursor-pointer',
             fontSize,
             gap,
             multiple ? [paddingY, 'flex-wrap'] : height,
@@ -105,7 +105,7 @@ export default function SelectBase(props: SelectBaseProps) {
             }
           }}
         >
-          <div className={clsx('flex flex-grow flex-wrap', Spacing.gap.tight)}>{displayValue}</div>
+          <div className={clsx('flex flex-grow flex-wrap whitespace-nowrap', Spacing.gap.tight)}>{displayValue}</div>
           <div className={clsx(iconSize, 'text-deemphasized-content hover:text-content', 'transition-all ease-out')}>
             {icon ? icon : <AiOutlineLeft className={clsx(open ? '-rotate-90' : 'rotate-0',  ' transition-all ease-out')} />}
           </div>

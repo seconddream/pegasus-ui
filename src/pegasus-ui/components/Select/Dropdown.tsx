@@ -41,19 +41,27 @@ export default function Dropdown(props: DropdownProps) {
         {options.map((option, index) => {
           return (
             <div
+              onMouseDown={(e)=>{
+                e.stopPropagation()
+                e.preventDefault()
+              }}
+              onClick={(e)=>{
+                e.stopPropagation()
+                e.preventDefault()
+              }}
               key={index}
               className={clsx(
-                'flex items-center justify-start hover:cursor-pointer transition-all ease-out',
+                'flex items-center justify-start hover:cursor-pointer transition-all ease-out whitespace-nowrap',
                 fontSize,
                 iconSize,
-                Spacing.gap.extratight,
+                Spacing.gap.tight,
                 paddingX,
                 height,
                 // corner,
                 'bg-white text-content hover:bg-primary hover:text-white'
               )}
             >
-              {option.label}
+              {multiple && <input type='checkbox' />}{option.label}
             </div>
           )
         })}
