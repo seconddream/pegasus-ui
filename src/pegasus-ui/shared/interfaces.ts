@@ -63,6 +63,7 @@ export function parsePlacement(position: Placement) {
 }
 
 export interface WithFormControl {
+  width?: string
   value?: any
   error?: boolean
   errorMessage?: string

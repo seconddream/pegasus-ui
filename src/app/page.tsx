@@ -1,7 +1,7 @@
 'use client'
 
-import {Divider, Button, Section} from '@/pegasus-ui'
-import Input from '@/pegasus-ui/components/Input'
+import {Divider, Button, Section} from '../..'
+import Input from '../../components/Input'
 
 import {
   AiOutlineBlock,

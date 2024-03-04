@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import { ReactNode, useRef } from 'react'
 import { WithId, WithSizing } from '../../shared/interfaces'
-import { Sizing } from '@/pegasus-ui/shared/styles'
+import { Sizing } from '../../shared/styles'
 import { AiOutlineCheckCircle, AiOutlineExclamationCircle, AiOutlineLoading3Quarters } from 'react-icons/ai'
 
 export type ButtonType = 'primary' | 'secondary' | 'transparent'

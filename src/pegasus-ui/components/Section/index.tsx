@@ -17,8 +17,8 @@ import {
 } from 'react-icons/ai'
 import ButtonBase from '../Button/ButtonBase'
 import Divider from '../Divider'
-import useFading from '@/pegasus-ui/hooks/useReveal'
-import useReveal from '@/pegasus-ui/hooks/useReveal'
+import useFading from '../../hooks/useReveal'
+import useReveal from '../../hooks/useReveal'
 
 export interface SectionProps extends WithId, WithDirection, WithSpacing {
   title: string

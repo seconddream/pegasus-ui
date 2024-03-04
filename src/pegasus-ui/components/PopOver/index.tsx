@@ -5,13 +5,14 @@ import useReveal, { RevealAnimation } from '../..//hooks/useReveal'
 
 export interface PopUpBaseProps extends WithPlacement {
   show?: boolean
-  el: ReactNode
+  el: any
   animation?: RevealAnimation
+  block?: boolean
   children: ReactNode
 }
 
 export default function PopOver(props: PopUpBaseProps) {
-  const { show=false, position = 'top', el, animation='fade-in', children } = props
+  const { show=false, block=false, position = 'top', el, animation='fade-in', children } = props
 
   const { top, bottom, left, right, topLeft, topRight, bottomLeft, bottomRight } = parsePlacement(position)
 
@@ -29,7 +30,7 @@ export default function PopOver(props: PopUpBaseProps) {
   return (
     <div className={clsx('relative', {})}>
       <div ref={targetRef}
-        className={clsx('absolute z-10', {
+        className={clsx('absolute z-10', block && 'min-w-full', {
           'bottom-full pb-1.5': top || topLeft || topRight,
           'top-full pt-1.5': bottom || bottomLeft || bottomRight,
           'left-1/2 -translate-x-1/2': top || bottom,
