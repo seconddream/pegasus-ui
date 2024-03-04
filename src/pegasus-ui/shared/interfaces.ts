@@ -64,7 +64,8 @@ export function parsePlacement(position: Placement) {
 
 export interface WithFormControl {
   value?: any
-  error?: any
+  error?: boolean
+  errorMessage?: string
   disabled?: boolean
   readOnly?: boolean
   onChange?: (value:any)=>any

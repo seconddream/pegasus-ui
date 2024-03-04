@@ -91,7 +91,7 @@ export default function Section(props: SectionProps) {
             'flex flex-wrap justify-center items-center',
             fontSize,
             iconSize,
-            !loading && error ? 'text-warning-600' : 'text-content',
+            !loading && error ? 'text-warning' : 'text-content',
             Spacing.gap.tight
           )}
         >

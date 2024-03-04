@@ -2,10 +2,15 @@ import clsx from 'clsx'
 import { WithId } from '../../shared/interfaces'
 import { Sizing } from '../../shared/styles'
 
-export type LabelColor = 'white' | 'gray' | 'amber' | 'emerald' | 'teal' | 'sky' | 'indigo' | 'fuchsia' | 'pink' | 'red'
+export type LabelColor ='dark' | 'white' | 'gray' | 'amber' | 'emerald' | 'teal' | 'sky' | 'indigo' | 'fuchsia' | 'pink' | 'red'
 
 
 const LabelColors = {
+  dark: {
+    border: 'border-slate-700',
+    text: 'text-white',
+    bg: 'bg-slate-700'
+  },
   white: {
     border: 'border-slate-600',
     text: 'text-slate-700',

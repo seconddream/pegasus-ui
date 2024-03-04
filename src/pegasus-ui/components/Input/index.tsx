@@ -2,12 +2,7 @@ import { useState } from 'react'
 import { WithFormControl, WithId, WithSizing } from '../../shared/interfaces'
 import { FormItemDefaultWidth, Sizing } from '../../shared/styles'
 import Label from '../Label'
-import {
-  AiOutlineCloseCircle,
-  AiOutlineCopy,
-  AiOutlineEye,
-  AiOutlineEyeInvisible,
-} from 'react-icons/ai'
+import { AiOutlineCloseCircle, AiOutlineCopy, AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
 import clsx from 'clsx'
 
 export interface InputProps extends WithId, WithSizing, WithFormControl {
@@ -76,34 +71,22 @@ export default function Input(props: InputProps) {
       id={id}
       className={clsx(
         'flex border justify-start items-center shadow-sm',
-        { 'bg-white': !disabled, ['bg-disabled']: disabled },
+        disabled ? 'bg-disabled' : 'bg-white',
         width,
         fontSize,
         gap,
-        { [height]: type !== 'textarea', [paddingY]: type === 'textarea' },
+        type === 'textarea' ? paddingY : height,
         corner,
-        error ? 'border-error-600' : 'border-dark-line',
+        error ? 'border-error' : 'border-dark-line',
         paddingX,
-        { [`ring-highlight ring-2`]: focus }
+        focus && 'ring-2 ring-highlight'
       )}
-      
     >
-      {prefix && (
-        <span
-          className={clsx({
-            ' text-deemphasized-content': !error,
-            ['text-error-600']: error,
-          })}
-        >
-          {prefix}
-        </span>
-      )}
+      {prefix && <span className={clsx(error ? 'text-error' : 'text-deemphasized-content')}>{prefix}</span>}
       {type !== 'textarea' && (
         <input
           disabled={disabled}
-          className={clsx('border-none outline-none w-full', {
-            [`bg-disabled  text-deemphasized-content`]: disabled,
-          })}
+          className={clsx('border-none outline-none w-full', disabled && 'bg-disabled text-disabled-content')}
           type={type === 'password' ? (showPassword ? 'text' : type) : type}
           value={isControlled ? initValue : _value}
           maxLength={maxLength}
@@ -128,9 +111,7 @@ export default function Input(props: InputProps) {
       {type === 'textarea' && (
         <textarea
           disabled={disabled}
-          className={clsx('border-none outline-none w-full', {
-            [`bg-disabled  text-deemphasized-content`]: disabled,
-          })}
+          className={clsx('border-none outline-none w-full', disabled && 'bg-disabled text-disabled-content')}
           value={isControlled ? initValue : _value}
           maxLength={maxLength}
           placeholder={placeHolder}
@@ -157,8 +138,8 @@ export default function Input(props: InputProps) {
         <span
           className={clsx(
             'flex items-center',
-            { 'flex-col': type === 'textarea' },
-            { 'text-deemphasized-content': !error, [' text-error-600']: error },
+            type === 'textarea' && 'flex-col',
+            error ? 'text-error' : 'text-deemphasized-content',
             gap,
             fontSize
           )}
@@ -185,7 +166,7 @@ export default function Input(props: InputProps) {
         <span
           className={clsx(
             'flex items-center',
-            { 'text-deemphasized-content': !error, [' text-error-600']: error },
+            error ? 'text-error' : 'text-deemphasized-content',
             gap,
             fontSize
           )}

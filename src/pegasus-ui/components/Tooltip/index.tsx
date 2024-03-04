@@ -38,7 +38,7 @@ export default function Tooltips(props: TooltipProps) {
     >
       <PopOver
         show={show}
-        el={<Label text={text} color='white' shadow />}
+        el={<Label text={text} color='dark' shadow />}
         position={position}
         animation={animation}
       >

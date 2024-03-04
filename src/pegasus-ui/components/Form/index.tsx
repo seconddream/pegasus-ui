@@ -1,16 +1,15 @@
 import {
   cloneElement,
   createContext,
-  createElement,
   useContext,
   useEffect,
   useState,
 } from 'react'
-import { FieldError, FieldErrors, FieldValidator, FieldValues, FormInstance } from '../hooks/useForm'
+import { FieldError, FieldErrors, FieldValidator, FieldValues, FormInstance } from '../../hooks/useForm'
 
-import classNames from 'classnames'
-import { WithDirectionProps, WithIdProps, WithSizeProps } from '../utils/shared_interfaces'
-import { Gap } from '../utils/default_style'
+import clsx from 'clsx'
+import { WithDirection, WithId, WithSizing, parseDirection } from '../../shared/interfaces'
+import {  Spacing } from '../../shared/styles'
 
 export const FormContext = createContext<FormInstance>({
   getFormValue: () => {},
@@ -32,35 +31,35 @@ export const FormContext = createContext<FormInstance>({
   _updateFieldValue: (fieldId: string, value: any, isInitial?: boolean, shouldUpdateFieldChildElement?: boolean) => {},
 })
 
-export interface FormProps extends WithIdProps {
+export interface FormProps extends WithId {
   form: FormInstance
   gap?: string
   children: any
 }
 export function Form(props: FormProps) {
-  const { id, form, gap = Gap.md, children } = props
+  const { id, form, gap=Spacing.gap.normal, children } = props
   return (
     <FormContext.Provider value={form}>
-      <div id={id} className={classNames('flex w-full flex-col', gap)}>
+      <div id={id} className={clsx('flex w-full flex-col', gap)}>
         {children}
       </div>
     </FormContext.Provider>
   )
 }
 
-export interface FormSection extends WithIdProps, WithDirectionProps {
+export interface FormSection extends WithId, WithDirection {
   title?: string
   tools?: any[]
   gap?: string
   children: any
 }
 export function FormSection(props: FormSection) {
-  const { id, title, tools, direction = 'vertical', gap = Gap.sm, children } = props
+  const { id, title, tools, direction = 'vertical', gap = Spacing.gap.normal, children } = props
   return (
-    <div id={id} className={classNames('flex w-full flex-col', gap)}>
+    <div id={id} className={clsx('flex w-full flex-col', gap)}>
       {title && (
-        <div className={classNames('flex w-full items-center', { 'justify-start': !tools, 'justify-between': tools })}>
-          <span className='flex justify-start items-center text-sm font-normal text-slate-400'>{title}</span>
+        <div className={clsx('flex w-full items-center', { 'justify-start': !tools, 'justify-between': tools })}>
+          <span className='flex justify-start items-center text-sm font-normal text-deemphasized-content'>{title}</span>
           {tools && (
             <span className='flex justify-start items-center'>
               {tools.map((tool, index) => {
@@ -74,14 +73,14 @@ export function FormSection(props: FormSection) {
           )}
         </div>
       )}
-      <div className={classNames('flex w-full', gap, { 'flex-col': direction === 'vertical' })}>{children}</div>
+      <div className={clsx('flex w-full', gap, { 'flex-col': direction === 'vertical' })}>{children}</div>
     </div>
   )
 }
 
-export interface FormFieldProps extends WithIdProps, WithDirectionProps, WithSizeProps {
+export interface FormFieldProps extends WithId, WithDirection, WithSizing {
   fieldId: string
-  title?: string
+  label?: string
   width?: string
   required?: boolean
   disabled?: boolean
@@ -92,7 +91,7 @@ export function FormField(props: FormFieldProps) {
   const {
     id,
     fieldId,
-    title,
+    label,
     direction = 'vertical',
     size = 'md',
     width = 'w-full',
@@ -101,11 +100,8 @@ export function FormField(props: FormFieldProps) {
     validate,
     children,
   } = props
-  const vertical = direction === 'vertical'
-  const horizontal = direction === 'horizontal'
-  const lg = size === 'lg'
-  const md = size === 'md'
-  const sm = size === 'sm'
+  const {vertical} = parseDirection(direction)
+
 
   const form = useContext(FormContext)
 
@@ -137,8 +133,8 @@ export function FormField(props: FormFieldProps) {
   }, [])
 
   return (
-    <div className={classNames('flex', width, Gap.xs, { 'flex-col': vertical })}>
-      {title && <div className={classNames('flex')}>{title}</div>}
+    <div className={clsx('flex', width, Spacing.gap.tight, { 'flex-col': vertical })}>
+      {label && <div className={clsx('flex text-content')}>{label}</div>}
       <div>
         {cloneElement(children, {
           ...children.props,
