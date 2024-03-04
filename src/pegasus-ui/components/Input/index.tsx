@@ -7,7 +7,6 @@ import clsx from 'clsx'
 
 export interface InputProps extends WithId, WithSizing, WithFormControl {
   type?: 'number' | 'password' | 'text' | 'textarea'
-  width?: string
   prefix?: string
   suffix?: string
   placeHolder?: string
@@ -24,7 +23,7 @@ export default function Input(props: InputProps) {
   const {
     id,
     type = 'text',
-    width = FormItemDefaultWidth,
+    width = 'w-full',
     size = 'md',
     prefix,
     suffix,
