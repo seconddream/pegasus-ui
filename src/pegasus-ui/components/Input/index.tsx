@@ -80,6 +80,10 @@ export default function Input(props: InputProps) {
         paddingX,
         focus && 'ring-2 ring-highlight'
       )}
+      onClick={(e)=>{
+        e.stopPropagation()
+        e.preventDefault()
+      }}
     >
       {prefix && <span className={clsx(error ? 'text-error' : 'text-deemphasized-content')}>{prefix}</span>}
       {type !== 'textarea' && (
@@ -105,6 +109,10 @@ export default function Input(props: InputProps) {
               onEnterPress?.()
             }
           }}
+          onClick={(e)=>{
+            e.stopPropagation()
+            e.preventDefault()
+          }}
         />
       )}
       {type === 'textarea' && (
@@ -129,6 +137,10 @@ export default function Input(props: InputProps) {
             if (e.key === 'Enter') {
               onEnterPress?.()
             }
+          }}
+          onClick={(e)=>{
+            e.stopPropagation()
+            e.preventDefault()
           }}
         />
       )}

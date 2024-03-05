@@ -121,13 +121,9 @@ export default function ButtonBase(props: ButtonBaseProps) {
           ? 'hover:cursor-pointer focus:outline-none focus:ring-2 focus:ring-highlight'
           : 'hover:cursor-not-allowed'
       )}
-      onMouseDown={(e) => {
-        e.preventDefault()
-        e.stopPropagation()
-      }}
       onClick={(e) => {
-        e.preventDefault()
         e.stopPropagation()
+        e.preventDefault()
         if (!shouldInteract) {
           return
         }

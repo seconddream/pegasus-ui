@@ -2,7 +2,7 @@ export interface WithId {
   id?: string
 }
 
-export type Sizing = 'lg' | 'md' | 'sm'
+export type Sizing = 'lg' | 'md' | 'sm' | 'xs'
 export interface WithSizing {
   size?: Sizing
 }
@@ -11,6 +11,7 @@ export function parseSizing(size: Sizing) {
     lg: size === 'lg',
     md: size === 'md',
     sm: size === 'sm',
+    xs: size === 'xs',
   }
 }
 
@@ -72,3 +73,6 @@ export interface WithFormControl {
   onChange?: (value:any)=>any
 }
 
+export interface Withlocale {
+  locale?: string
+}

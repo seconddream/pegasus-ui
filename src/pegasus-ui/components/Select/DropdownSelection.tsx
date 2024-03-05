@@ -75,8 +75,15 @@ export default function Dropdown(props: DropdownProps) {
       <div
         className={clsx(
           'flex flex-col divide-y divide-light-line border border-dark-line bg-white shadow-xl max-h-48 overflow-y-scroll',
-          corner
+          corner,
+          
         )}
+        onClick={(e)=>{
+          if(multiple){
+            e.preventDefault()
+            e.stopPropagation()
+          }
+        }}
       >
         {options.map((option, index) => {
           const optionSelected = multiple

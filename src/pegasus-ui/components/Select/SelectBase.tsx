@@ -1,17 +1,5 @@
-import {
-  ReactNode,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react'
-import {
-  WithFormControl,
-  WithId,
-  WithPlacement,
-  WithSizing,
-} from '../../shared/interfaces'
+import { ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { WithFormControl, WithId, WithPlacement, WithSizing } from '../../shared/interfaces'
 import { Sizing, Spacing } from '../../shared/styles'
 import clsx from 'clsx'
 import { AiOutlineDown, AiOutlineLeft } from 'react-icons/ai'
@@ -21,13 +9,9 @@ import PopOver from '../PopOver'
 
 export type SelectOption = { label: string; value: any }
 
-export interface SelectBaseProps
-  extends WithId,
-    WithSizing,
-    WithPlacement,
-    WithFormControl {
+export interface SelectBaseProps extends WithId, WithSizing, WithPlacement, WithFormControl {
   icon?: ReactNode
-  options: SelectOption[]
+  options?: SelectOption[]
   sufix?: string
   input?: boolean
   onInputChange?: () => any
@@ -45,7 +29,7 @@ export default function SelectBase(props: SelectBaseProps) {
     error,
     disabled,
     icon,
-    options,
+    options = [],
     position = 'bottomRight',
     sufix,
     input,
@@ -55,8 +39,7 @@ export default function SelectBase(props: SelectBaseProps) {
     children,
   } = props
 
-  const { fontSize, gap, height, paddingX, paddingY, minHeight, corner, iconSize } =
-    Sizing[size]
+  const { fontSize, gap, height, paddingX, paddingY, minHeight, corner, iconSize } = Sizing[size]
   const shouldInteract = !disabled
 
   const displayValue = useMemo(() => {
@@ -80,7 +63,8 @@ export default function SelectBase(props: SelectBaseProps) {
           )
         })
     } else {
-      if (options) {
+      
+      if (options.length >0 ) {
         return options.filter((o) => o.value === value)[0]?.label
       } else {
         return value
@@ -93,7 +77,8 @@ export default function SelectBase(props: SelectBaseProps) {
   const baseRef = useRef<HTMLDivElement>(null)
 
   const handleClose = (e: any) => {
-    if(e?.target?.classList?.contains('ignorePopOverClose')){
+    if(e.defaultPrevented) return
+    if (e?.target?.classList?.contains('ignorePopOverClose')) {
       return
     }
     if (baseRef.current && !baseRef.current.contains(e.target)) {
@@ -102,29 +87,21 @@ export default function SelectBase(props: SelectBaseProps) {
   }
 
   useEffect(() => {
-    document.addEventListener('mousedown', handleClose)
+    document.addEventListener('click', handleClose)
     return () => {
-      document.removeEventListener('mousedown', handleClose)
+      document.removeEventListener('click', handleClose)
     }
   }, [])
 
   return (
     <div id={id} className={clsx(width)}>
-      <PopOver
-        el={children}
-        show={open}
-        animation='slide-down'
-        position={position}
-        block
-      >
+      <PopOver el={children} show={open} animation='slide-down' position={position} block>
         <div
           ref={baseRef}
           tabIndex={shouldInteract ? 0 : undefined}
           className={clsx(
             'flex items-center justify-start border shadow-sm',
-            disabled
-              ? 'bg-disabled text-deemphasized-content'
-              : 'bg-white hover:cursor-pointer',
+            disabled ? 'bg-disabled text-deemphasized-content' : 'bg-white hover:cursor-pointer',
             fontSize,
             gap,
             multiple ? [paddingY, minHeight] : height,
@@ -145,30 +122,12 @@ export default function SelectBase(props: SelectBaseProps) {
             }
           }}
         >
-          <div
-            className={clsx(
-              'flex flex-grow flex-wrap whitespace-nowrap',
-              Spacing.gap.tight
-            )}
-          >
-            {displayValue}
-          </div>
-          <div
-            className={clsx(
-              iconSize,
-              'text-deemphasized-content hover:text-content',
-              'transition-all ease-out'
-            )}
-          >
+          <div className={clsx('flex flex-grow flex-wrap whitespace-nowrap', Spacing.gap.tight)}>{displayValue}</div>
+          <div className={clsx(iconSize, 'text-deemphasized-content hover:text-content', 'transition-all ease-out')}>
             {icon ? (
               icon
             ) : (
-              <AiOutlineLeft
-                className={clsx(
-                  open ? '-rotate-90' : 'rotate-0',
-                  ' transition-all ease-out'
-                )}
-              />
+              <AiOutlineLeft className={clsx(open ? '-rotate-90' : 'rotate-0', ' transition-all ease-out')} />
             )}
           </div>
         </div>

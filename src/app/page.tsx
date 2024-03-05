@@ -1,16 +1,8 @@
 'use client'
 
 import { ButtonType } from '@/pegasus-ui/components/Button/ButtonBase'
-import {
-  Divider,
-  Button,
-  Section,
-  Input,
-  DropdownSelection,
-} from '../pegasus-ui'
-import { Calendar } from '@/pegasus-ui/components/Calendar'
-import moment from 'moment'
-
+import { Divider, Button, Section, Input, DropdownSelection } from '../pegasus-ui'
+import DateTimeSelection from '@/pegasus-ui/components/Select/DateTimeSelection'
 
 const SelectionOptions = [
   { label: 'Option1', value: 'option1' },
@@ -73,9 +65,9 @@ export default function Home() {
         <DropdownSelection width='w-56' options={SelectionOptions} />
         {/* <DropdownSelection width='w-56' error options={SelectionOptions} /> */}
         <DropdownSelection width='w-56' multiple options={SelectionOptions} />
-        <Calendar  anchorTime={moment().unix()} view='day' cellRenderer={(cell, index)=>{
-          return <div className='flex h-10 w-10 justify-center items-center'>{cell.name}</div>
-        }} />
+      </Section>
+      <Section title='Calendar'>
+        <DateTimeSelection width='w-56' position='bottomLeft' locale='de' />
       </Section>
     </div>
   )

@@ -51,7 +51,14 @@ export const Spacing = {
     normal: 'gap-3',
     tight: 'gap-2',
     extratight: 'gap-1'
+  },
+  padding: {
+    relaxed: 'px-4 py-3',
+    normal: 'px-4 py-3.5',
+    tight: 'px-4 py-3',
+    extratight: 'px-4 py-3'
   }
 }
+
 
 export const FormItemDefaultWidth = 'w-48'
